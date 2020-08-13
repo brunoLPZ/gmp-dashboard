@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'gmp',
+    redirectTo: 'gmp/dashboard',
     pathMatch: 'full'
   }
 ];

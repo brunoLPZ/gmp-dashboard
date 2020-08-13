@@ -1,0 +1,31 @@
+@import "colors";
+
+.large-icon-button {
+  transform: scale(2);
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.green-color {
+  color: $gmp-green;
+}
+
+.mat-drawer.sidenav-content {
+  width: 400px;
+  height: 100%;
+  background-color: $gmp-white;
+}
+
+.sidenav-container {
+  background-color: $gmp-white;
+}
+
+.mat-drawer-backdrop.mat-drawer-shown {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.main-container {
+  height: calc(100% - 64px);
+}

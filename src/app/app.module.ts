@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppAuthGuard } from "./auth/app-auth-guard";
 import { initializer } from "./auth/app-init";
 import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
+import { SharedModule } from "./modules/shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    SharedModule
   ],
   providers: [
     AppAuthGuard,

@@ -6,7 +6,7 @@
       "config": {
         "url": "http://localhost:8080/auth",
         "realm": "gmp",
-        "clientId": "network-monitor"
+        "clientId": "gmp-ui"
       },
       "initOptions": {
         "onLoad": "login-required",

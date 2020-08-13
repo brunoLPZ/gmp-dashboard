@@ -1,8 +1,10 @@
 import { NgModule } from "@angular/core";
 import { MaterialModule } from "./material/material.module";
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const SHARED_MODULES = [
-  MaterialModule
+  MaterialModule,
+  FlexLayoutModule
 ];
 
 const SHARED_COMPONENTS = [

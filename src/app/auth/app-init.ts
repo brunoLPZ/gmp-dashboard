@@ -12,7 +12,7 @@ export function initializer(keycloak: KeycloakService): () => Promise<any> {
     config: {
       url: environment.settings.keycloak.config.url,
       realm: environment.settings.keycloak.config.realm,
-      clientId: environment.settings.keycloak.config.clientId
+      clientId: environment.settings.keycloak.config.clientId,
     },
     initOptions: {
       checkLoginIframe: false
