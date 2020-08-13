@@ -1,0 +1,19 @@
+{
+  "production": false,
+  "settings": {
+    "rduServiceUrl": "http://localhost:8070/gmp-service",
+    "keycloak": {
+      "config": {
+        "url": "http://localhost:8080/auth",
+        "realm": "gmp",
+        "clientId": "network-monitor"
+      },
+      "initOptions": {
+        "onLoad": "login-required",
+        "checkLoginIframe": false
+      },
+      "enableBearerInterceptor": true,
+      "bearerExcludedUrls": ["/assets"]
+    }
+  }
+}
