@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../../environments/environment";
 import { Observable } from "rxjs";
 import { AccessHistoryDto } from "../models/accessHistoryDto";
+import { formatDate } from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -11,16 +12,14 @@ export class HistoryService {
 
   private readonly url: string = environment.settings.gmpServiceUrl;
 
-  constructor(private readonly httpClient: HttpClient) {}
+  constructor(private readonly httpClient: HttpClient) {
+  }
 
-  public getLatestAccesses(limit?: number): Observable<AccessHistoryDto[]>{
-    let params = {}
-    if (limit != null) {
-      params = {
-        limit: limit
-      }
-    }
-    return this.httpClient.get<AccessHistoryDto[]>(`${this.url}/history/latest`, {
+  public getLatestAccesses(from: Date, to?: Date): Observable<AccessHistoryDto[]> {
+    const params = Object.assign({},
+      { from: formatDate(from, 'y-MM-dd', 'en') },
+      to && { to: formatDate(to, 'y-MM-dd', 'en') });
+    return this.httpClient.get<AccessHistoryDto[]>(`${this.url}/history`, {
       params
     });
   }

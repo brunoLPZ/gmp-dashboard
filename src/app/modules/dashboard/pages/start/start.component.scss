@@ -1,22 +1,30 @@
+@import "../../../../colors";
+
 .title {
-  font-family: Catamaran;
-  font-size: 3em;
+  font-family: Major Mono Display;
+  font-size: 4em;
   text-align: center;
 }
 
 .subtitle {
-  font-family: Catamaran;
+  font-family: Roboto;
+  font-weight: 300;
   font-size: 1.5em;
+  padding-top: 15px;
   text-align: center;
 }
 
-.detections-container {
-  margin-top: 20px;
-  padding: 20px;
+.congrats-img {
+  padding: 15px;
 }
 
-.table-headline {
-  margin-bottom: 20px;
-  font-family: Catamaran;
-  font-size: 2em;
+.huge-icon-button {
+  transform: scale(3);
+}
+
+.huge-button {
+  background-color: $gmp-green;
+  color: whitesmoke;
+  width: 100px;
+  height: 100px;
 }

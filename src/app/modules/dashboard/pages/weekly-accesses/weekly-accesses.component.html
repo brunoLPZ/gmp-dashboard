@@ -1,0 +1,22 @@
+<div fxLayout="row" fxLayoutAlign="center" class="full-height">
+  <mat-card class="card-container">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Your weekly accesses</mat-card-title>
+      <mat-card-subtitle>Check visited items on last week</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <app-detections-table *ngIf="detections && detections.length > 0"
+                            [detections]="detections"></app-detections-table>
+      <ng-template *ngIf="detections && detections.length == 0">
+        <div fxLayout="column" fxLayoutAlign="center center">
+          <img src="assets/img/congrats.png" class="congrats-img"/>
+          <div>
+            <p class="congrats-msg">You haven't accessed any pages in the last week.</p>
+            <p class="congrats-msg-special">Keep it uP!</p>
+          </div>
+        </div>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+</div>

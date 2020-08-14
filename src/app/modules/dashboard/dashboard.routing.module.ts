@@ -1,8 +1,8 @@
 import { RouterModule, Routes } from "@angular/router";
-import { AppAuthGuard } from "../../auth/app-auth-guard";
 import { NgModule } from "@angular/core";
 import { DashboardComponent } from "./dashboard.component";
 import { StartComponent } from "./pages/start/start.component";
+import { WeeklyAccessComponent } from "./pages/weekly-accesses/weekly-accesses.component";
 
 const routes: Routes = [
   {
@@ -12,12 +12,14 @@ const routes: Routes = [
   },
   {
     path: '',
-    canActivate: [AppAuthGuard],
-    component: DashboardComponent,
     children: [
       {
         path: 'start',
         component: StartComponent
+      },
+      {
+        path: 'weekly',
+        component: WeeklyAccessComponent
       }
     ]
   }

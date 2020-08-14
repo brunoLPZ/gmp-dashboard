@@ -5,17 +5,21 @@ import { DashboardComponent } from "./dashboard.component";
 import { StartComponent } from "./pages/start/start.component";
 import { DetectionsTableComponent } from "./detections-table/detections-table.component";
 import { CommonModule } from "@angular/common";
+import { WeeklyAccessComponent } from "./pages/weekly-accesses/weekly-accesses.component";
 
 @NgModule({
   declarations: [
     DashboardComponent,
     StartComponent,
-    DetectionsTableComponent
+    DetectionsTableComponent,
+    WeeklyAccessComponent
   ],
   imports: [
     DashboardRoutingModule,
     SharedModule,
     CommonModule
+  ],
+  providers: [
   ]
 })
 export class DashboardModule { }

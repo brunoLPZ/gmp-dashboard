@@ -12,6 +12,11 @@
   color: $gmp-green;
 }
 
+.green-bg {
+  background-color: $gmp-green;
+  color: black;
+}
+
 .mat-drawer.sidenav-content {
   width: 400px;
   height: 100%;
@@ -32,4 +37,12 @@
 
 .full-height {
   height: 100%;
+}
+
+.congrats-img {
+  margin: 20px;
+}
+
+.congrats-title {
+  text-align: center;
 }

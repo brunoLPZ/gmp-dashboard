@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AccessHistoryDto } from "../models/accessHistoryDto";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from "@angular/material/paginator";
 
 /**
  * Controller for main page. This page is the container for many pages in modules/main/pages.
@@ -7,11 +9,14 @@ import { AccessHistoryDto } from "../models/accessHistoryDto";
 @Component({
   selector: 'app-detections-table',
   templateUrl: './detections-table.component.html',
-  styleUrls: ['./detections-table.component.scss']
+  styleUrls: ['./detections-table.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class DetectionsTableComponent {
+export class DetectionsTableComponent implements OnInit {
 
   @Input() detections: AccessHistoryDto[];
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  dataSource;
   displayedColumns: string[] = [
     'blacklist.domain',
     'blacklist.ip',
@@ -19,6 +24,11 @@ export class DetectionsTableComponent {
     'deposit',
     'createdDate'
   ];
+
+  ngOnInit() {
+    this.dataSource = new MatTableDataSource(this.detections);
+    this.dataSource.paginator = this.paginator;
+  }
 
   constructor() {
   }

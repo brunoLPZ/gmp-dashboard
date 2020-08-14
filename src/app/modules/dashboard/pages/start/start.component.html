@@ -1,14 +1,24 @@
 <div fxLayout="column" class="full-height">
-  <div fxLayout="column" fxLayoutAlign="center">
-    <div class="title">Wellcome to your GMP dashboard!</div>
+  <div fxFlex="30" fxLayout="column" fxLayoutAlign="center">
+    <div class="title">Welcome to your GMP dashboard!</div>
     <div class="subtitle">Here you could see your recent and historical activity</div>
   </div>
-  <div fxLayout="row" class="full-height">
-    <div fxFlex="50" class="detections-container">
-      <div class="table-headline">Your latest accesses</div>
-      <app-detections-table [detections]="detections"></app-detections-table>
+  <div fxFlex="70" fxLayout="row" fxLayoutAlign="space-around center">
+    <div fxLayout="column" fxLayoutAlign="space-around center">
+      <div>
+        <button [routerLink]="'/dashboard/weekly'" mat-fab aria-label="Recent accesses" class="huge-button">
+          <mat-icon class="huge-icon-button">event_note</mat-icon>
+        </button>
+      </div>
+      <div class="subtitle">Weekly accesses</div>
     </div>
-    <div fxFlex="50" class="full-height">
+    <div fxLayout="column" fxLayoutAlign="space-around center">
+      <div>
+        <button mat-fab aria-label="Historical accesses" class="huge-button">
+          <mat-icon class="huge-icon-button">show_chart</mat-icon>
+        </button>
+      </div>
+      <div class="subtitle">Historical accesses</div>
     </div>
   </div>
 </div>
