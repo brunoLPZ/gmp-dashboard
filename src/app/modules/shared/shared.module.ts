@@ -1,20 +1,22 @@
 import { NgModule } from "@angular/core";
 import { MaterialModule } from "./material/material.module";
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from "@angular/common/http";
+import { NullBooleanPipe } from "./pipes/null-boolean.pipe";
 
 const SHARED_MODULES = [
   MaterialModule,
-  FlexLayoutModule
+  FlexLayoutModule,
+  HttpClientModule
 ];
 
 const SHARED_COMPONENTS = [
+  NullBooleanPipe
 ];
 
-/** NOTE: Shared services are not provided HERE
- *  cause then they are not singletons
- *  @see app.module.ts providers array
- */
-const SHARED_SERVICES = [];
+const SHARED_SERVICES = [
+  NullBooleanPipe
+];
 
 @NgModule({
   declarations: [SHARED_COMPONENTS],

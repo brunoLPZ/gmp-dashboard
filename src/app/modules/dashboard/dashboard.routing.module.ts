@@ -1,23 +1,23 @@
 import { RouterModule, Routes } from "@angular/router";
 import { AppAuthGuard } from "../../auth/app-auth-guard";
 import { NgModule } from "@angular/core";
-import { DashboardComponent } from "./pages/dashboard/dashboard.component";
-import { GmpComponent } from "./gmp.component";
+import { DashboardComponent } from "./dashboard.component";
+import { StartComponent } from "./pages/start/start.component";
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'start',
     pathMatch: 'full'
   },
   {
     path: '',
     canActivate: [AppAuthGuard],
-    component: GmpComponent,
+    component: DashboardComponent,
     children: [
       {
-        path: 'dashboard',
-        component: DashboardComponent
+        path: 'start',
+        component: StartComponent
       }
     ]
   }
@@ -27,5 +27,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class GmpRoutingModule {
+export class DashboardRoutingModule {
 }

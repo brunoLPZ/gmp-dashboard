@@ -3,12 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'gmp',
-    loadChildren: () => import('./modules/gmp/gmp.module').then(m => m.GmpModule)
+    path: 'dashboard',
+    loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
     path: '',
-    redirectTo: 'gmp/dashboard',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   }
 ];
