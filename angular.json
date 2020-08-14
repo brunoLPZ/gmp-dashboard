@@ -30,7 +30,11 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "keycloak-js",
+              "js-sha256"
+            ]
           },
           "configurations": {
             "production": {
