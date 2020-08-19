@@ -1,17 +1,24 @@
 @import "../../../../colors";
 
+
 .title {
   font-family: Major Mono Display;
-  font-size: 4em;
   text-align: center;
+  font-size: 3em;
+  @media (min-width: 700px) {
+    font-size: 4em;
+  }
 }
 
 .subtitle {
   font-family: Roboto;
   font-weight: 300;
-  font-size: 1.5em;
+  font-size: 1.25em;
   padding-top: 15px;
   text-align: center;
+  @media (min-width: 700px) {
+    font-size: 1.5em;
+  }
 }
 
 .congrats-img {
@@ -19,12 +26,19 @@
 }
 
 .huge-icon-button {
-  transform: scale(3);
+  transform: scale(2);
+  @media (min-width: 700px) {
+    transform: scale(3);
+  }
 }
 
 .huge-button {
   background-color: $gmp-green;
   color: whitesmoke;
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
+  @media (min-width: 700px) {
+    width: 100px;
+    height: 100px;
+  }
 }

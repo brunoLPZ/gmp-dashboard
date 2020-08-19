@@ -3,11 +3,16 @@ table {
 }
 
 th.mat-header-cell {
-  font-size: 18px;
   font-family: Major Mono Display;
+  font-weight: bold;
   color: black;
+  font-size: 16px;
 }
 
 .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
   color: black;
+}
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+  padding: 10px !important;
 }
