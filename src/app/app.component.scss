@@ -6,6 +6,13 @@
 
 .toolbar-spacer {
   flex: 1 1 auto;
+  text-align: center;
+  font-size: 48px;
+  font-family: "Major Mono Display";
+  a {
+    text-decoration: none;
+    color: black;
+  }
 }
 
 .green-color {
@@ -46,4 +53,24 @@
 
 .congrats-title {
   text-align: center;
+}
+
+.mat-list-base .mat-subheader {
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.navigation-item {
+  a {
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+}
+
+.navigation-item:hover {
+  background-color: darken($gmp-white, 5%);
+}
+
+.mat-form-field {
+  font-size: 16px;
 }

@@ -9,8 +9,14 @@ const routes: Routes = [
     loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
+    path: 'contribute',
+    canActivate: [AppAuthGuard],
+    loadChildren: () => import('./modules/contribute/contribute.module').then(m => m.ContributeModule)
+  },
+  {
     path: '',
-    redirectTo: 'dashboard',
+    canActivate: [AppAuthGuard],
+    redirectTo: 'dashboard/start',
     pathMatch: 'full'
   }
 ];
@@ -19,4 +25,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

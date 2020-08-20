@@ -7,5 +7,31 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  title = 'gmp-dashboard';
+  sections = [
+    {
+      title: "dashboard",
+      subsections: [
+        {
+          url: "/dashboard/start",
+          label: "start"
+        }, {
+          url: "/dashboard/weekly",
+          label: "weekly"
+        }
+      ]
+    },
+    {
+      title: "contribute",
+      subsections: [
+        {
+          url: "/contribute",
+          label: "start"
+        },
+        {
+          url: "/contribute/suggest",
+          label: "suggest"
+        }
+      ]
+    }
+  ];
 }

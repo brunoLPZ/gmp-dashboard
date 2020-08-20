@@ -1,12 +1,21 @@
 <mat-drawer-container fxFill hasBackdrop="true">
   <mat-drawer class="sidenav-content" #drawer mode="push">
+    <mat-list *ngFor="let section of sections">
+      <h3 matSubheader>{{section.title}}</h3>
+      <mat-list-item class="navigation-item" *ngFor="let subsection of section.subsections">
+        <a (click)="drawer.toggle()" mat-list-item [routerLink]="subsection.url"> {{ subsection.label }} </a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
   </mat-drawer>
   <mat-drawer-content class="sidenav-container">
     <mat-toolbar class="position-fixed">
       <button mat-icon-button aria-label="Menu" (click)="drawer.toggle()">
         <mat-icon class="large-icon-button green-color">menu</mat-icon>
       </button>
-      <div class="toolbar-spacer"></div>
+      <div class="toolbar-spacer">
+        <a [routerLink]="'/dashboard/start'">GMP</a>
+      </div>
       <button mat-icon-button aria-label="Account">
         <mat-icon class="large-icon-button green-color">account_circle</mat-icon>
       </button>

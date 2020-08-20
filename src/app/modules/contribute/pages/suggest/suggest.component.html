@@ -1,0 +1,51 @@
+<div fxLayout="row" fxLayoutAlign="center" class="card-wrapper">
+  <mat-card class="card-container">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Suggest a new website</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="subtitle">Your suggestion</div>
+      <form [formGroup]="formGroup" fxLayout="column" fxLayoutAlign="center">
+        <mat-form-field>
+          <mat-label>Domain</mat-label>
+          <input matInput required="true" placeholder="domainexample.com" formControlName="domain">
+          <mat-error
+            *ngIf="formGroup.get('domain').getError('required')">
+            Domain is required
+          </mat-error>
+          <mat-error
+            *ngIf="formGroup.get('domain').getError('pattern')">
+            Check your domain format (please take a look to the description below the form)
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>IP</mat-label>
+          <input matInput placeholder="91.109.250.78" formControlName="ip">
+          <mat-error
+            *ngIf="formGroup.get('ip').getError('pattern')">
+            Check your IP format (please take a look to the description below the form)
+          </mat-error>
+        </mat-form-field>
+      </form>
+      <div class="actions" fxLayoutAlign="end">
+        <button mat-flat-button color="primary" (click)="submitForm()">Send</button>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="paragraph-container">
+        Provide a new website to be blacklisted. We need the following information in order to
+        detect accesses to an specific web:
+        <ul>
+          <li><strong>Domain</strong>: You can easily get it from the website URL, for example: for
+            <a href="">http://www.google.com</a> the domain is <a href="">google.com</a>. We also
+            accept as domain <a href="">www.google.com</a>.
+          </li>
+          <li><strong>IP</strong>: You can provide the IP address if you want to speed up the
+            process and just if you know it.
+          </li>
+        </ul>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

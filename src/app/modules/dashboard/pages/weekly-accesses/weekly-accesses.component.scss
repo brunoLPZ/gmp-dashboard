@@ -1,10 +1,12 @@
 .example-header-image {
   background-image: url('../../../../../assets/img/gmp_logo.png');
   background-size: cover;
+  margin-right: 10px;
 }
 
 .card-container {
   margin: 10px;
+  min-width: 80%;
 }
 
 .congrats-msg {

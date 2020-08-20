@@ -8,6 +8,7 @@ import { AppAuthGuard } from "./auth/app-auth-guard";
 import { initializer } from "./auth/app-init";
 import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
 import { SharedModule } from "./modules/shared/shared.module";
+import { ToastrModule } from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,15 @@ import { SharedModule } from "./modules/shared/shared.module";
     AppRoutingModule,
     BrowserAnimationsModule,
     KeycloakAngularModule,
-    SharedModule
+    SharedModule,
+    ToastrModule.forRoot({
+      enableHtml: true,
+      closeButton: true,
+      countDuplicates: true,
+      resetTimeoutOnDuplicate: true,
+      positionClass: 'toast-bottom-right',
+      titleClass: 'toast-title-gmp'
+    })
   ],
   providers: [
     AppAuthGuard,

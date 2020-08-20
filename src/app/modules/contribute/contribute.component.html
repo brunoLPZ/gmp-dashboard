@@ -1,0 +1,40 @@
+<div fxLayout="column" fxLayoutAlign="space-around center">
+  <div fxLayout="column" fxLayoutAlign="center" class="title-container">
+    <div class="title">help us to keep improving!</div>
+    <div class="subtitle">Collaborate with the project to build a better tool for everybody</div>
+  </div>
+  <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center">
+    <mat-card fxFlex="50" class="card-container">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Increase our blacklist database</mat-card-title>
+        <mat-card-subtitle>Propose new websites you think we must take into account
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        The GMP blacklist system is based on community input that is reviewed in detail afterward
+        before it is implemented. If you notice any missing web pages that you think should be
+        blocked, please fill in the form at the following link.
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="primary" [routerLink]="'/contribute/suggest'">Suggest new website</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-card fxFlex="50" class="card-container">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Report incidents or suggest new features</mat-card-title>
+        <mat-card-subtitle>If you find something that can be improved let us know
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        We appreciate and take into account community feedback on GMP. If you detect any defect in
+        the system or want to suggest any improvement, please fill in the form in the following
+        link.
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="primary">Report</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

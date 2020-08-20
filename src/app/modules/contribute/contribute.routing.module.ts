@@ -1,25 +1,21 @@
 import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
-import { StartComponent } from "./pages/start/start.component";
-import { WeeklyAccessComponent } from "./pages/weekly-accesses/weekly-accesses.component";
+import { ContributeComponent } from "./contribute.component";
+import { SuggestComponent } from "./pages/suggest/suggest.component";
 import { AppAuthGuard } from "../../auth/app-auth-guard";
 
 const routes: Routes = [
-    {
+  {
     path: '',
     canActivate: [AppAuthGuard],
     children: [
       {
         path: '',
-        component: StartComponent
+        component: ContributeComponent
       },
       {
-        path: 'start',
-        component: StartComponent
-      },
-      {
-        path: 'weekly',
-        component: WeeklyAccessComponent
+        path: 'suggest',
+        component: SuggestComponent
       }
     ]
   }
@@ -29,5 +25,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule {
+export class ContributeRoutingModule {
 }
