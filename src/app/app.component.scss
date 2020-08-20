@@ -43,10 +43,6 @@
   height: calc(100% - 64px);
 }
 
-.full-height {
-  height: 100%;
-}
-
 .congrats-img {
   margin: 20px;
 }
@@ -69,8 +65,4 @@
 
 .navigation-item:hover {
   background-color: darken($gmp-white, 5%);
-}
-
-.mat-form-field {
-  font-size: 16px;
 }

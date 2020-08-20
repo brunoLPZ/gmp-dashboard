@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { HistoryService } from "../../services/history.service";
 
 /**
  * Controller for main page. This page is the container for many pages in modules/main/pages.

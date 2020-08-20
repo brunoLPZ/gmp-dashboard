@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AccessHistoryDto } from "../models/accessHistoryDto";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
@@ -9,8 +9,7 @@ import { MatPaginator } from "@angular/material/paginator";
 @Component({
   selector: 'app-detections-table',
   templateUrl: './detections-table.component.html',
-  styleUrls: ['./detections-table.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./detections-table.component.scss']
 })
 export class DetectionsTableComponent implements OnInit {
 

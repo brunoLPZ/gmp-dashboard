@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { BlacklistService } from "../../services/blacklist.service";
 import { BlacklistDto } from "../../../dashboard/models/blacklistDto";
@@ -10,8 +10,7 @@ import { PopupService } from "../../../popup/popup.service";
 @Component({
   selector: 'app-suggest',
   templateUrl: './suggest.component.html',
-  styleUrls: ['./suggest.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./suggest.component.scss']
 })
 export class SuggestComponent {
 

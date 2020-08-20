@@ -6,8 +6,8 @@
   </ng-container>
 
   <ng-container matColumnDef="blacklist.ip">
-    <th mat-header-cell *matHeaderCellDef>ip</th>
-    <td mat-cell *matCellDef="let element">{{element.blacklist.ip}}</td>
+    <th fxHide fxShow.gt-sm mat-header-cell *matHeaderCellDef>ip</th>
+    <td fxHide fxShow.gt-sm mat-cell *matCellDef="let element">{{element.blacklist.ip}}</td>
   </ng-container>
 
   <ng-container matColumnDef="falsePositive">
