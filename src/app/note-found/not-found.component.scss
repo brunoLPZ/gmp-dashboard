@@ -1,0 +1,16 @@
+.title {
+  font-family: Major Mono Display;
+  text-align: center;
+  font-size: 3em;
+  @media (min-width: 700px) {
+    font-size: 4em;
+  }
+  margin: 20px;
+}
+
+.subtitle {
+  text-align: center;
+  @media (min-width: 700px) {
+    font-size: 1.5em;
+  }
+}

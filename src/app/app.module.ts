@@ -9,10 +9,12 @@ import { initializer } from "./auth/app-init";
 import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
 import { SharedModule } from "./modules/shared/shared.module";
 import { ToastrModule } from "ngx-toastr";
+import { NotFoundComponent } from "./note-found/not-found.component";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
