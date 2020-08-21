@@ -1,8 +1,7 @@
 import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
-import { StartComponent } from "./pages/start/start.component";
-import { WeeklyAccessComponent } from "./pages/weekly-accesses/weekly-accesses.component";
 import { AppAuthGuard } from "../../auth/app-auth-guard";
+import { AccountDetailsComponent } from "./pages/account-details/account-details.component";
 
 const routes: Routes = [
   {
@@ -11,15 +10,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: StartComponent
+        component: AccountDetailsComponent
       },
       {
-        path: 'start',
-        component: StartComponent
-      },
-      {
-        path: 'weekly',
-        component: WeeklyAccessComponent
+        path: 'details',
+        component: AccountDetailsComponent
       }
     ]
   }
@@ -29,5 +24,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule {
+export class AccountRoutingModule {
 }

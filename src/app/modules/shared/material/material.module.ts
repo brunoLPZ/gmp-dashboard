@@ -9,6 +9,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatListModule } from "@angular/material/list";
 import { MatInputModule } from "@angular/material/input";
 import { MatSortModule } from "@angular/material/sort";
+import { MatMenuModule } from "@angular/material/menu";
 
 const MAT_MODULES = [
   MatToolbarModule,
@@ -20,7 +21,8 @@ const MAT_MODULES = [
   MatCardModule,
   MatListModule,
   MatInputModule,
-  MatSortModule
+  MatSortModule,
+  MatMenuModule
 ];
 
 @NgModule({

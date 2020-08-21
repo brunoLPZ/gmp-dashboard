@@ -15,6 +15,11 @@ const routes: Routes = [
     loadChildren: () => import('./modules/contribute/contribute.module').then(m => m.ContributeModule)
   },
   {
+    path: 'account',
+    canActivate: [AppAuthGuard],
+    loadChildren: () => import('./modules/account/account.module').then(m => m.AccountModule)
+  },
+  {
     path: 'not-found',
     canActivate: [AppAuthGuard],
     component: NotFoundComponent

@@ -16,9 +16,19 @@
       <div class="toolbar-spacer">
         <a [routerLink]="'/dashboard/start'">GMP</a>
       </div>
-      <button mat-icon-button aria-label="Account">
+      <button mat-icon-button aria-label="Account" [matMenuTriggerFor]="menu">
         <mat-icon class="large-icon-button green-color">account_circle</mat-icon>
       </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="'/account/details'">
+          <mat-icon>account_circle</mat-icon>
+          <span>Account</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
     </mat-toolbar>
     <div class="main-container">
       <router-outlet></router-outlet>

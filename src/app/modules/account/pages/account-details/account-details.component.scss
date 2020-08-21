@@ -1,0 +1,26 @@
+.example-header-image {
+  background-image: url('../../../../../assets/img/gmp_logo.png');
+  background-size: cover;
+  margin-right: 10px;
+}
+
+.card-container {
+  margin: 20px;
+  padding: 20px;
+}
+
+.card-container mat-card-content {
+  font-size: 16px;
+}
+
+.card-container mat-card-content>:first-child {
+  margin-top: 20px;
+}
+
+.card-container mat-form-field {
+  width: 100%;
+}
+
+.label {
+  margin-top: 10px;
+}
