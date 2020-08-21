@@ -8,6 +8,7 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatCardModule } from "@angular/material/card";
 import { MatListModule } from "@angular/material/list";
 import { MatInputModule } from "@angular/material/input";
+import { MatSortModule } from "@angular/material/sort";
 
 const MAT_MODULES = [
   MatToolbarModule,
@@ -18,7 +19,8 @@ const MAT_MODULES = [
   MatPaginatorModule,
   MatCardModule,
   MatListModule,
-  MatInputModule
+  MatInputModule,
+  MatSortModule
 ];
 
 @NgModule({
