@@ -6,13 +6,15 @@ import { StartComponent } from "./pages/start/start.component";
 import { DetectionsTableComponent } from "./detections-table/detections-table.component";
 import { CommonModule } from "@angular/common";
 import { WeeklyAccessComponent } from "./pages/weekly-accesses/weekly-accesses.component";
+import { HistoricalAccessesComponent } from "./pages/historical-accesses/historical-accesses.component";
 
 @NgModule({
   declarations: [
     DashboardComponent,
     StartComponent,
     DetectionsTableComponent,
-    WeeklyAccessComponent
+    WeeklyAccessComponent,
+    HistoricalAccessesComponent
   ],
   imports: [
     DashboardRoutingModule,
