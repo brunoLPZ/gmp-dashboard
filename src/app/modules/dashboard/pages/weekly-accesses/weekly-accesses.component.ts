@@ -23,7 +23,9 @@ export class WeeklyAccessComponent implements OnInit {
   ngOnInit() {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-    this.historyService.getLatestAccesses(oneWeekAgo).subscribe(
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    this.historyService.getLatestAccesses(oneWeekAgo, tomorrow).subscribe(
       res => this.detections = res,
       error => {
         this.popupService

@@ -3,9 +3,26 @@
     <mat-list *ngFor="let section of sections">
       <h3 matSubheader>{{section.title}}</h3>
       <mat-list-item class="navigation-item" *ngFor="let subsection of section.subsections">
-        <a (click)="drawer.toggle()" mat-list-item [routerLink]="subsection.url"> {{ subsection.label }} </a>
+        <a (click)="drawer.toggle()" mat-list-item
+           [routerLink]="subsection.url"> {{ subsection.label }} </a>
       </mat-list-item>
       <mat-divider></mat-divider>
+    </mat-list>
+  </mat-drawer>
+  <mat-drawer class="sidenav-profile" #menu mode="push" position="end">
+    <mat-list>
+      <mat-list-item class="navigation-item">
+        <mat-icon>account_circle</mat-icon>
+        <a (click)="menu.toggle()" mat-list-item [routerLink]="'/account/details'">
+          Account
+        </a>
+      </mat-list-item>
+      <mat-list-item class="navigation-item">
+        <mat-icon>exit_to_app</mat-icon>
+        <a (click)="logout()" mat-list-item>
+          Logout
+        </a>
+      </mat-list-item>
     </mat-list>
   </mat-drawer>
   <mat-drawer-content class="sidenav-container">
@@ -16,19 +33,9 @@
       <div class="toolbar-spacer">
         <a [routerLink]="'/dashboard/start'">GMP</a>
       </div>
-      <button mat-icon-button aria-label="Account" [matMenuTriggerFor]="menu">
+      <button mat-icon-button aria-label="Account" (click)="menu.toggle()">
         <mat-icon class="large-icon-button green-color">account_circle</mat-icon>
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item [routerLink]="'/account/details'">
-          <mat-icon>account_circle</mat-icon>
-          <span>Account</span>
-        </button>
-        <button mat-menu-item (click)="logout()">
-          <mat-icon>exit_to_app</mat-icon>
-          <span>Logout</span>
-        </button>
-      </mat-menu>
     </mat-toolbar>
     <div class="main-container">
       <router-outlet></router-outlet>
