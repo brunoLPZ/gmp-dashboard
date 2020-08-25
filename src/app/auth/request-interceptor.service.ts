@@ -32,7 +32,7 @@ export class RequestInterceptor implements HttpInterceptor {
      */
     return next.handle(request).pipe(
       catchError((error, caught: Observable<HttpEvent<any>>) => {
-        if (error.status === 401 || error.status === 403) {
+        if (error.status === 401 || error.status === 403 || !request.headers.get('authorization')) {
           this.handleAuthError();
           return of(error);
         }
