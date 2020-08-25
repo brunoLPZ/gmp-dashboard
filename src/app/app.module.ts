@@ -10,6 +10,8 @@ import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
 import { SharedModule } from "./modules/shared/shared.module";
 import { ToastrModule } from "ngx-toastr";
 import { NotFoundComponent } from "./not-found/not-found.component";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { RequestInterceptor } from "./auth/request-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -38,8 +40,14 @@ import { NotFoundComponent } from "./not-found/not-found.component";
       useFactory: initializer,
       multi: true,
       deps: [KeycloakService]
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

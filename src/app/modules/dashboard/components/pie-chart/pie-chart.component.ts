@@ -9,35 +9,34 @@ import { AccessHistoryDto } from "../../models/accessHistoryDto";
 import { GraphService } from "../../services/graph.service";
 
 @Component({
-  selector: 'app-line-chart',
-  templateUrl: './line-chart.component.html',
-  styleUrls: ['./line-chart.component.scss'],
+  selector: 'app-pie-chart',
+  templateUrl: './pie-chart.component.html',
+  styleUrls: ['./pie-chart.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class LineChartComponent implements AfterViewInit {
+export class PieChartComponent implements AfterViewInit {
 
   @ViewChild('chart') chart: ElementRef;
   @Input() data: AccessHistoryDto[];
   @Input() title: string;
+  @Input() subtitle: string;
 
   showGraph = true;
 
-  constructor(private readonly graphService: GraphService) {
-  }
+  constructor(private readonly graphService: GraphService) {}
 
   ngAfterViewInit() {
     const width = this.chart.nativeElement.offsetWidth;
     const height = this.chart.nativeElement.offsetHeight;
 
-    this.showGraph = this.graphService.createLineChart(this.chart, this.data, this.title,
-      width, height);
+    this.showGraph = this.graphService.createPieChart(this.chart, this.data, this.title,
+      this.subtitle, width, height);
   }
 
   onResize(ev: any) {
     if (this.chart.nativeElement) {
-      this.showGraph = this.graphService.createLineChart(this.chart, this.data, this.title,
-        ev.contentRect.width, ev.contentRect.height);
+      this.showGraph = this.graphService.createPieChart(this.chart, this.data, this.title,
+        this.subtitle, ev.contentRect.width, ev.contentRect.height);
     }
   }
-
 }

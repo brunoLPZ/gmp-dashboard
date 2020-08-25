@@ -23,34 +23,33 @@ export class AppAuthGuard extends KeycloakAuthGuard {
     if (isDevMode()) {
       console.log('AppAuthGuard#canActivate called.');
     }
+    console.log(state);
     return super.canActivate(route, state);
   }
 
   isAccessAllowed(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       if (!this.authenticated) {
-        this.keycloakAngular.login();
-        return;
-      }
-
-      console.log('role restriction given at app-routing.module for this route', route.data.roles);
-      const requiredRoles = route.data.roles;
-      let granted: boolean;
-      granted = false;
-      if (!requiredRoles || requiredRoles.length === 0) {
-        granted = true;
-      } else {
-        for (const requiredRole of requiredRoles) {
-          if (this.roles.indexOf(requiredRole) > -1) {
-            granted = true;
-            break;
-          }
+        // check for loginHint in secured url
+        const keycloakLoginOptions: Keycloak.KeycloakLoginOptions = {};
+        if (route.queryParams.loginHint) {
+          keycloakLoginOptions.loginHint = route.queryParams.loginHint;
         }
+
+        this.keycloakAngular.login(keycloakLoginOptions);
+        // access not allowed
+        resolve(false);
       }
 
-      if (granted === false) {
-        this.router.navigate(['/']);
+      // enable role specific routing in data.roles[]
+      const requiredRoles = route.data.roles;
+      if (!requiredRoles || requiredRoles.length === 0) {
+        return resolve(true);
       }
+      if (!this.roles || this.roles.length === 0) {
+        resolve(false);
+      }
+      const granted = requiredRoles.some(r => this.roles.includes(r));
       resolve(granted);
     });
   }

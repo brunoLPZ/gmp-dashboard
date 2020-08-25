@@ -26,11 +26,20 @@
   opacity: 0.25;
 }
 
-.legend {
-  font-size: 15px;
+.pie-slice:hover {
+  cursor: pointer;
+}
+
+.pie-tooltip-key-text {
+  text-anchor: middle;
   font-weight: 300;
-  text-transform: uppercase;
-  alignment-baseline: middle;
+  font-size: 15px;
+}
+
+.pie-tooltip-number-text {
+  text-anchor: middle;
+  font-weight: 200;
+  font-size: 64px;
 }
 
 .title {
