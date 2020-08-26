@@ -3,4 +3,5 @@ export class Account {
   firstName: string;
   lastName: string;
   userName: string;
+  notification: boolean;
 }

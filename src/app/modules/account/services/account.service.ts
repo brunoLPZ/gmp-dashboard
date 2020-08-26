@@ -16,6 +16,7 @@ export class AccountService {
     account.firstName = tokenParsed['given_name'];
     account.lastName = tokenParsed['family_name'];
     account.userName = tokenParsed['preferred_username'];
+    account.notification = tokenParsed['notification'];
     return account;
   }
 }

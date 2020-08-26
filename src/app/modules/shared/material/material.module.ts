@@ -11,6 +11,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSortModule } from "@angular/material/sort";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatSelectModule } from "@angular/material/select";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
 const MAT_MODULES = [
   MatToolbarModule,
@@ -24,7 +25,8 @@ const MAT_MODULES = [
   MatInputModule,
   MatSortModule,
   MatMenuModule,
-  MatSelectModule
+  MatSelectModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({
