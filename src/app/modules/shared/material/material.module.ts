@@ -10,6 +10,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatInputModule } from "@angular/material/input";
 import { MatSortModule } from "@angular/material/sort";
 import { MatMenuModule } from "@angular/material/menu";
+import { MatSelectModule } from "@angular/material/select";
 
 const MAT_MODULES = [
   MatToolbarModule,
@@ -22,7 +23,8 @@ const MAT_MODULES = [
   MatListModule,
   MatInputModule,
   MatSortModule,
-  MatMenuModule
+  MatMenuModule,
+  MatSelectModule
 ];
 
 @NgModule({

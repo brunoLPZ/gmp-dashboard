@@ -8,13 +8,14 @@ import { Router } from "@angular/router";
  * Controller for main page. This page is the container for many pages in modules/main/pages.
  */
 @Component({
-  selector: 'app-weekly-accesses',
-  templateUrl: './weekly-accesses.component.html',
-  styleUrls: ['./weekly-accesses.component.scss']
+  selector: 'app-latest-accesses',
+  templateUrl: './latest-accesses.component.html',
+  styleUrls: ['./latest-accesses.component.scss']
 })
-export class WeeklyAccessComponent implements OnInit {
+export class LatestAccessesComponent implements OnInit {
 
   detections: AccessHistoryDto[];
+  limit = "20";
 
   constructor(private historyService: HistoryService, private popupService: PopupService,
               private router: Router) {
@@ -22,10 +23,7 @@ export class WeeklyAccessComponent implements OnInit {
 
   ngOnInit() {
     const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    this.historyService.getLatestAccesses(oneWeekAgo, tomorrow).subscribe(
+    this.historyService.getLatestAccesses(this.limit).subscribe(
       res => this.detections = res,
       error => {
         this.popupService
@@ -34,4 +32,14 @@ export class WeeklyAccessComponent implements OnInit {
       });
   }
 
+  onLimitChange() {
+    this.detections = [];
+    this.historyService.getLatestAccesses(this.limit).subscribe(
+      res => this.detections = res,
+      error => {
+        this.popupService
+        .showError("Error retrieving latest week accesses", "Unexpected error")
+        this.router.navigate(['/dashboard/start'])
+      });
+  }
 }

@@ -25,10 +25,10 @@ export class HistoricalAccessesComponent implements OnInit {
 
   ngOnInit() {
     const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 6);
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    this.historyService.getLatestAccesses(oneWeekAgo, tomorrow).subscribe(
+    this.historyService.getLatestAccessesFromTo(oneWeekAgo, tomorrow).subscribe(
       res => this.lastSevenDaysAccesses = res,
       error => {
         this.popupService
@@ -36,7 +36,7 @@ export class HistoricalAccessesComponent implements OnInit {
         this.router.navigate(['/dashboard/start'])
       });
     const oneYearAgo = new Date(new Date().getFullYear(), 0, 1);
-    this.historyService.getLatestAccesses(oneYearAgo, tomorrow).subscribe(
+    this.historyService.getLatestAccessesFromTo(oneYearAgo, tomorrow).subscribe(
       res => this.yearAccesses = res,
       error => {
         this.popupService

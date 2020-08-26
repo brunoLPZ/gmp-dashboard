@@ -15,12 +15,20 @@ export class HistoryService {
   constructor(private readonly httpClient: HttpClient) {
   }
 
-  public getLatestAccesses(from: Date, to?: Date): Observable<AccessHistoryDto[]> {
+  public getLatestAccessesFromTo(from: Date, to?: Date): Observable<AccessHistoryDto[]> {
     const params = Object.assign({},
       { from: formatDate(from, 'y-MM-dd', 'en') },
       to && { to: formatDate(to, 'y-MM-dd', 'en') });
     return this.httpClient.get<AccessHistoryDto[]>(`${this.url}/history`, {
       params
+    });
+  }
+
+  public getLatestAccesses(limit?: string): Observable<AccessHistoryDto[]> {
+    return this.httpClient.get<AccessHistoryDto[]>(`${this.url}/history/latest`, {
+      params: {
+        limit: limit
+      }
     });
   }
 }

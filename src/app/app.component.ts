@@ -15,8 +15,8 @@ export class AppComponent {
           url: "/dashboard/start",
           label: "start"
         }, {
-          url: "/dashboard/weekly",
-          label: "weekly"
+          url: "/dashboard/latest",
+          label: "latest"
         }
       ]
     },
