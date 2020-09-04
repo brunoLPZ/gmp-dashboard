@@ -235,6 +235,14 @@ export class GraphService {
     // Remove old chart (handling resizes)
     this.removeOldChart(chart);
 
+    // Get grouped accesses by website
+    const groupedAccesses = this.groupAccessesBy(data, [], 'blacklist');
+
+    // If there's no accesses then don't display the chart
+    if (Object.keys(groupedAccesses).length === 0) {
+      return false;
+    }
+
     // Define pie chart radius
     const radius = Math.min(width, height) / 2 - this.margin.bottom;
 
@@ -245,13 +253,6 @@ export class GraphService {
     .append('g')
     .attr('transform', `translate(${width / 2},${height / 2})`);
 
-    // Get grouped accesses by website
-    const groupedAccesses = this.groupAccessesBy(data, [], 'blacklist');
-
-    // If there's no accesses then don't display the chart
-    if (groupedAccesses.length === 0) {
-      return false;
-    }
 
     // Color scale to use different colors for each website
     const color = d3.scaleOrdinal()
@@ -324,12 +325,7 @@ export class GraphService {
    * @private
    */
   private removeOldChart(chart: ElementRef) {
-    const children = chart.nativeElement.children;
-    if (children.length === 0) {
-      return;
-    }
-    let child;
-    child = children[children.length === 1 ? 0 : 1];
+    const child = chart.nativeElement.querySelector('svg');
     if (child) {
       d3.select(child).remove();
     }
