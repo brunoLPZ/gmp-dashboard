@@ -29,7 +29,8 @@
       <mat-slide-toggle
         class="slider"
         color="primary"
-        [checked]="account.notification">
+        [checked]="account.notification"
+        (change)="onToggleNotifications($event)">
       </mat-slide-toggle>
     </mat-card-content>
   </mat-card>

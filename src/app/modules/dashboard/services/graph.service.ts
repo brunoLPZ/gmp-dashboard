@@ -1,6 +1,7 @@
 import { ElementRef, Injectable } from '@angular/core';
 import * as d3 from 'd3';
-import { AccessHistoryDto } from '../models/accessHistoryDto';
+import { GroupedAccessByDayDto } from "../models/groupedAccessByDayDto";
+import { GroupedAccessByMonthDto } from "../models/groupedAccessByMonthDto";
 
 @Injectable({
   providedIn: 'root'
@@ -22,22 +23,14 @@ export class GraphService {
    * @param width chart width
    * @param height chart height
    */
-  public createLineChart(chart: ElementRef, data: AccessHistoryDto[], title: string,
+  public createLineChart(chart: ElementRef, data: GroupedAccessByDayDto[], title: string,
                          width: number, height: number): boolean {
 
     // Remove old chart (handle resizing)
     this.removeOldChart(chart);
 
-    // Extract all dates and ignore time
-    const allDates = this.clearTimeFromDates(data);
-
-    // Group accesses by same date
-    const groupedAccesses = this.groupAccessesBy(data, allDates, 'time');
-    // Extract accesses
-    const accumulatedAccesses = groupedAccesses.map(access => access.accumulated);
-
     // If there's just accesses on a single day then don't show them
-    if (groupedAccesses.length < 2) {
+    if (data.length < 2) {
       return false;
     }
     // svg main container
@@ -46,7 +39,7 @@ export class GraphService {
     .attr('height', height);
 
     // Scale for times
-    const x = this.buildScaleTime(d3.extent(allDates),
+    const x = this.buildScaleTime(d3.extent(data.map(d => this.createDateWithoutTime(d.day))),
       [this.margin.left, (width - this.margin.right)]);
 
     // x axis configuration (tick for every day)
@@ -59,11 +52,12 @@ export class GraphService {
     .call(xAxis);
 
     // Scale for accesses
-    const y = this.buildScaleLinear([0, d3.max(accumulatedAccesses) + 1],
+    const y = this.buildScaleLinear([0, d3.max(data.map(d => d.accumulated)) + 1],
       [height - this.margin.bottom, this.margin.top])
 
     // y axis configuration (integer ticks)
-    const yAxis = this.buildAxisY(y, d3.format('.0f'), d3.max(accumulatedAccesses));
+    const yAxis = this.buildAxisY(y, d3.format('.0f'),
+      d3.min([d3.max(data.map(d => d.accumulated)), 8]));
 
     // draw y axis
     svg.append('g')
@@ -76,47 +70,47 @@ export class GraphService {
 
     // add line path for accesses
     svg.append('g').append('path')
-    .datum(groupedAccesses)
+    .datum(data)
     .attr('fill', 'none')
     .attr('stroke', this.PRIMARY_COLOR)
     .attr('stroke-width', 2.5)
     .attr('d', d3.line()
-      .x(access => x(new Date(access.time)))
-      .y(access => y(access.number))
+      .x(access => x(this.createDateWithoutTime(access.day)))
+      .y(access => y(access.accesses))
     )
 
     // add circles for accesses
     svg.selectAll('access-point')
-    .data(groupedAccesses)
+    .data(data)
     .enter()
     .append('circle')
     .attr('fill', this.PRIMARY_COLOR)
     .attr('stroke', 'none')
-    .attr('cx', access => x(new Date(access.time)))
-    .attr('cy', (access => y(access.number)))
-    .attr('r', 4)
+    .attr('cx', access => x(this.createDateWithoutTime(access.day)))
+    .attr('cy', (access => y(access.accesses)))
+    .attr('r', 6)
 
     // add line path for accumulated accesses
     svg.append('g').append('path')
-    .datum(groupedAccesses)
+    .datum(data)
     .attr('fill', 'none')
     .attr('stroke', this.SECONDARY_COLOR)
     .attr('stroke-width', 2.5)
     .attr('d', d3.line()
-      .x(access => x(new Date(access.time)))
+      .x(access => x(this.createDateWithoutTime(access.day)))
       .y(access => y(access.accumulated))
     )
 
     // add circles for accumulated accesses
     svg.selectAll('access-point')
-    .data(groupedAccesses)
+    .data(data)
     .enter()
     .append('circle')
     .attr('fill', this.SECONDARY_COLOR)
     .attr('stroke', 'none')
-    .attr('cx', access => x(new Date(access.time)))
+    .attr('cx', access => x(this.createDateWithoutTime(access.day)))
     .attr('cy', (access => y(access.accumulated)))
-    .attr('r', 4)
+    .attr('r', 6)
 
     // Rotate x labels to be vertical and win space
     this.rotateAxisLabels(chart);
@@ -135,20 +129,14 @@ export class GraphService {
    * @param width chart width
    * @param height chart height
    */
-  public createBarChart(chart: ElementRef, data: AccessHistoryDto[], title: string,
+  public createBarChart(chart: ElementRef, data: GroupedAccessByMonthDto[], title: string,
                         width: number, height: number) {
 
     // Removes old chart (handling resizing)
     this.removeOldChart(chart);
 
-    // Extract all dates and ignore time
-    const allDates = this.clearTimeFromDates(data);
-
-    // Group accesses by same date
-    const groupedAccesses = this.groupAccessesBy(data, allDates, 'month');
-
     // If there's just accesses on a single month then don't show them
-    if (groupedAccesses.length < 2) {
+    if (data.length < 2) {
       return false;
     }
 
@@ -160,7 +148,7 @@ export class GraphService {
     // x scale for bars
     const x = d3.scaleBand()
     .range([this.margin.left, width - this.margin.right])
-    .domain(groupedAccesses.map(access => access.month))
+    .domain(data.map(access => access.month))
     .padding(0.05)
 
     // x axis configuration
@@ -175,10 +163,10 @@ export class GraphService {
     // y scale for bars
     const y = d3.scaleLinear()
     .range([height - this.margin.bottom, this.margin.top])
-    .domain([0, d3.max(groupedAccesses.map(access => access.accumulated))]);
+    .domain([0, d3.max(data.map(access => access.accumulated))]);
 
     // y axis configuration
-    const yAxis = d3.axisLeft(y);
+    const yAxis = d3.axisLeft(y).ticks(d3.min([d3.max(data.map(d => d.accumulated)), 8]));
 
     // draw y axis
     svg.append('g')
@@ -191,21 +179,21 @@ export class GraphService {
 
     // Draw bars for accesses by month
     svg.selectAll()
-    .data(groupedAccesses)
+    .data(data)
     .enter()
     .append('rect')
-    .attr('x', access => x(access.month))
-    .attr('y', access => y(access.number))
-    .attr('height', access => height - this.margin.bottom - y(access.number))
+    .attr('x', access => x(access.month) - 2)
+    .attr('y', access => y(access.accesses))
+    .attr('height', access => height - this.margin.bottom - y(access.accesses))
     .attr('width', x.bandwidth() / 2)
     .attr('fill', this.PRIMARY_COLOR);
 
     // Draw bars for accumulated accesses next to accesses by month
     svg.selectAll()
-    .data(groupedAccesses)
+    .data(data)
     .enter()
     .append('rect')
-    .attr('x', access => x(access.month) + x.bandwidth() / 2)
+    .attr('x', access => x(access.month) + x.bandwidth() / 2 + 2)
     .attr('y', access => y(access.accumulated))
     .attr('height', access => height - this.margin.bottom - y(access.accumulated))
     .attr('width', x.bandwidth() / 2)
@@ -229,17 +217,14 @@ export class GraphService {
    * @param width chart width
    * @param height chart height
    */
-  public createPieChart(chart: ElementRef, data: AccessHistoryDto[], title: string,
-                        subtitle: string, width: number, height: number): boolean {
+  public createPieChart(chart: ElementRef, data: any[], title: string, width: number,
+                        height: number): boolean {
 
     // Remove old chart (handling resizes)
     this.removeOldChart(chart);
 
-    // Get grouped accesses by website
-    const groupedAccesses = this.groupAccessesBy(data, [], 'blacklist');
-
     // If there's no accesses then don't display the chart
-    if (Object.keys(groupedAccesses).length === 0) {
+    if (Object.keys(data).length === 0) {
       return false;
     }
 
@@ -256,13 +241,13 @@ export class GraphService {
 
     // Color scale to use different colors for each website
     const color = d3.scaleOrdinal()
-    .domain(Object.keys(groupedAccesses))
+    .domain(Object.keys(data))
     .range(this.COLORS)
 
     // Pie chart configuration to add angles to input data
     const pie = d3.pie()
     .value(d => d.value);
-    const data_ready = pie(d3.entries(groupedAccesses))
+    const data_ready = pie(d3.entries(data))
 
     // Create an arch generator
     const arcGenerator = d3.arc()
@@ -283,25 +268,11 @@ export class GraphService {
     .attr('class', 'pie-slice')
     // Add on click action to show more information for each slice
     .on('click', (d, i) => {
-
-      // Remove previous information
-      svg.selectAll('.pie-tooltip').remove();
-
-      // Create group for information
-      const g = svg
-      .append('g')
-      .attr('class', 'pie-tooltip');
-
-      // Add text to show selected website and number of accesses
-      g.append('text')
-      .text(d.data.key)
-      .attr('y', (height / 2) - this.margin.bottom + 30)
-      .attr('class', 'pie-tooltip-key-text')
-      g.append('text')
-      .text(d.data.value)
-      .attr('y', 20)
-      .attr('class', 'pie-tooltip-number-text')
+      this.selectPieChartSlice(svg, d, i, height, color);
     });
+
+    // Select first slice by default
+    this.selectPieChartSlice(svg, data_ready[0], 0, height, color);
 
     // add title
     svg.append('text')
@@ -309,12 +280,6 @@ export class GraphService {
     .attr('y', -(height / 2) + 40)
     .text(title)
     .attr('class', 'title');
-
-    svg.append('text')
-    .attr('x', -(width / 2) + this.margin.left)
-    .attr('y', -(height / 2) + 70)
-    .text(subtitle)
-    .style('font-size', '14px');
 
     return true;
   }
@@ -329,21 +294,6 @@ export class GraphService {
     if (child) {
       d3.select(child).remove();
     }
-  }
-
-  /**
-   * Clears time precision from dates to better display on charts
-   * @param data input data
-   * @private
-   */
-  private clearTimeFromDates(data: AccessHistoryDto[]): Date[] {
-    return data.map(d => {
-      const date = new Date(d.createdDate)
-      date.setHours(0);
-      date.setMinutes(0);
-      date.setSeconds(0);
-      return date;
-    })
   }
 
   /**
@@ -482,90 +432,41 @@ export class GraphService {
   }
 
   /**
-   * Extract accesses grouped by specified parameter
+   * Clears time precision from dates to better display on charts
    * @param data input data
-   * @param dates dates to be used if needed
-   * @param option parameter to group by
    * @private
    */
-  private groupAccessesBy(data: AccessHistoryDto[], dates: Date[], option) {
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
-      'Nov', 'Dec'];
-
-    let accesses;
-
-    switch (option) {
-      case 'time':
-        accesses = [];
-        dates.forEach(d => {
-          if (!accesses.find(access => access[option] === d.getTime())) {
-            accesses.push({
-              time: d.getTime(),
-              number: data.filter(access => this.isSameDay(new Date(access.createdDate), d)).length
-            })
-          }
-        });
-        break;
-      case 'month':
-        accesses = [];
-        dates.forEach(d => {
-          if (!accesses.find(access => access[option] === monthNames[d.getMonth()])) {
-            accesses.push({
-              month: monthNames[d.getMonth()],
-              monthId: d.getMonth(),
-              number: data.filter(access => this.isSameMonth(new Date(access.createdDate), d)).length
-            })
-          }
-        });
-        option = 'monthId';
-        break;
-      case 'blacklist':
-        accesses = {};
-        data.forEach(d => {
-          if (accesses[d.blacklist.domain] == null) {
-            accesses[d.blacklist.domain] = 1;
-          } else {
-            accesses[d.blacklist.domain] += 1;
-          }
-        });
-        return accesses;
-    }
-
-
-    accesses.sort((a, b) => a[option] - b[option]);
-
-    accesses.forEach((access, index) => {
-      if (index === 0) {
-        access['accumulated'] = access.number;
-      } else {
-        access['accumulated'] = access.number + accesses[index - 1].accumulated;
-      }
-    });
-
-    return accesses;
+  private createDateWithoutTime(date: string) {
+    const dateWithoutTime = new Date(date);
+    dateWithoutTime.setHours(0);
+    dateWithoutTime.setMinutes(0);
+    dateWithoutTime.setSeconds(0);
+    return dateWithoutTime;
   }
 
-  /**
-   * Determine if dates belong to same month
-   * @param first first date
-   * @param second second date
-   * @private
-   */
-  private isSameMonth(first: Date, second: Date) {
-    return first.getFullYear() === second.getFullYear() &&
-      first.getMonth() === second.getMonth();
-  }
+  private selectPieChartSlice(svg: any, d: any, i: number, height: number, color: any) {
 
-  /**
-   * Determine if dates are in same day
-   * @param first first date
-   * @param second second date
-   * @private
-   */
-  private isSameDay(first: Date, second: Date) {
-    return first.getFullYear() === second.getFullYear() &&
-      first.getMonth() === second.getMonth() &&
-      first.getDay() === second.getDay();
+    // Remove previous information
+    svg.selectAll('.pie-tooltip').remove();
+
+    svg.select('.pie-slice.selected').attr('class', 'pie-slice');
+    svg.selectAll('.pie-slice').filter((d, index) => index === i).attr('class', 'pie-slice selected');
+
+    // Create group for information
+    const g = svg
+    .append('g')
+    .attr('class', 'pie-tooltip');
+
+    // Add text to show selected website and number of accesses
+    g.append('text')
+    .text(d.data.key)
+    .attr('y', (height / 2) - this.margin.bottom + 30)
+    .attr('class', 'pie-tooltip-key-text')
+    g.append('text')
+    .text(d.data.value)
+    .attr('fill', color(d.data.key))
+    .attr('y', 20)
+    .attr('class', 'pie-tooltip-number-text')
   }
 
 }

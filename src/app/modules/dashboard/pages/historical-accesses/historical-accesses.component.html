@@ -1,16 +1,18 @@
-<div fxFill fxLayout="column" class="historical-wrapper">
+<div fxFill fxLayout="column" class="historical-wrapper"
+     *ngIf="lastSevenDaysAccesses && yearAccesses && itemAccesses">
   <div fxLayout.lt-sm="column" fxLayout.gt-sm="row" fxLayout.sm="column">
-    <div class="graph-wrapper" *ngIf="lastSevenDaysAccesses && yearAccesses">
+    <div class="graph-wrapper">
       <app-line-chart [data]="lastSevenDaysAccesses" [title]="'last 7 days'"></app-line-chart>
     </div>
-    <div class="graph-wrapper" *ngIf="lastSevenDaysAccesses && yearAccesses">
-      <app-bar-chart [data]="yearAccesses" [title]="'last year'"></app-bar-chart>
+    <div class="graph-wrapper">
+      <app-bar-chart [data]="yearAccesses"
+                     [title]="'year ' + currentYear"></app-bar-chart>
     </div>
   </div>
   <div fxLayout.lt-sm="column" fxLayout.gt-sm="row" fxLayout.sm="column">
-    <div class="graph-wrapper" *ngIf="lastSevenDaysAccesses && yearAccesses">
-      <app-pie-chart [data]="yearAccesses" [title]="'by website'"
-                     [subtitle]="'(LAST YEAR)'"></app-pie-chart>
+    <div class="graph-wrapper">
+      <app-pie-chart [data]="itemAccesses"
+                     [title]="'by web (' + currentYear + ')'"></app-pie-chart>
     </div>
     <div class="graph-wrapper">
 

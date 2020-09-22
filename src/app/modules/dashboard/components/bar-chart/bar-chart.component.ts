@@ -5,8 +5,8 @@ import {
   Input, ViewChild,
   ViewEncapsulation
 } from "@angular/core";
-import { AccessHistoryDto } from "../../models/accessHistoryDto";
 import { GraphService } from "../../services/graph.service";
+import { GroupedAccessByMonthDto } from "../../models/groupedAccessByMonthDto";
 
 @Component({
   selector: 'app-bar-chart',
@@ -17,7 +17,7 @@ import { GraphService } from "../../services/graph.service";
 export class BarChartComponent implements AfterViewInit {
 
   @ViewChild('chart') chart: ElementRef;
-  @Input() data: AccessHistoryDto[];
+  @Input() data: GroupedAccessByMonthDto[];
   @Input() title: string;
 
   showGraph = true;

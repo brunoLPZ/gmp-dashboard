@@ -5,8 +5,8 @@ import {
   Input, ViewChild,
   ViewEncapsulation
 } from "@angular/core";
-import { AccessHistoryDto } from "../../models/accessHistoryDto";
 import { GraphService } from "../../services/graph.service";
+import { GroupedAccessByDayDto } from "../../models/groupedAccessByDayDto";
 
 @Component({
   selector: 'app-line-chart',
@@ -17,7 +17,7 @@ import { GraphService } from "../../services/graph.service";
 export class LineChartComponent implements AfterViewInit {
 
   @ViewChild('chart') chart: ElementRef;
-  @Input() data: AccessHistoryDto[];
+  @Input() data: GroupedAccessByDayDto[];
   @Input() title: string;
 
   showGraph = true;

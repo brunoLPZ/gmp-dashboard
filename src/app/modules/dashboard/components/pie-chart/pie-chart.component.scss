@@ -30,10 +30,14 @@
   cursor: pointer;
 }
 
+.pie-slice.selected {
+  stroke-width: 10px;
+}
+
 .pie-tooltip-key-text {
   text-anchor: middle;
   font-weight: 300;
-  font-size: 15px;
+  font-size: 18px;
 }
 
 .pie-tooltip-number-text {

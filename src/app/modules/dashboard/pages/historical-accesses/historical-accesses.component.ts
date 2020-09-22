@@ -3,6 +3,9 @@ import { HistoryService } from "../../services/history.service";
 import { PopupService } from "../../../popup/popup.service";
 import { Router } from "@angular/router";
 import { AccessHistoryDto } from "../../models/accessHistoryDto";
+import { StatsService } from "../../services/stats.service";
+import { GroupedAccessByDayDto } from "../../models/groupedAccessByDayDto";
+import { GroupedAccessByMonthDto } from "../../models/groupedAccessByMonthDto";
 
 /**
  * Controller for main page. This page is the container for many pages in modules/main/pages.
@@ -14,21 +17,24 @@ import { AccessHistoryDto } from "../../models/accessHistoryDto";
 })
 export class HistoricalAccessesComponent implements OnInit {
 
-  lastSevenDaysAccesses: AccessHistoryDto[];
-  yearAccesses: AccessHistoryDto[];
+  lastSevenDaysAccesses: GroupedAccessByDayDto[];
+  yearAccesses: GroupedAccessByMonthDto[];
+  itemAccesses: any[];
   width: number;
   height: number;
+  currentYear: string;
 
-  constructor(private historyService: HistoryService, private popupService: PopupService,
+  constructor(private historyService: HistoryService,
+              private statsService: StatsService,
+              private popupService: PopupService,
               private router: Router) {
   }
 
   ngOnInit() {
+    this.currentYear = new Date().getFullYear().toString();
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 6);
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    this.historyService.getLatestAccessesFromTo(oneWeekAgo, tomorrow).subscribe(
+    this.statsService.getGroupedAccessesByDay(oneWeekAgo).subscribe(
       res => this.lastSevenDaysAccesses = res,
       error => {
         this.popupService
@@ -36,11 +42,18 @@ export class HistoricalAccessesComponent implements OnInit {
         this.router.navigate(['/dashboard/start'])
       });
     const oneYearAgo = new Date(new Date().getFullYear(), 0, 1);
-    this.historyService.getLatestAccessesFromTo(oneYearAgo, tomorrow).subscribe(
+    this.statsService.getGroupedAccessesByMonth(oneYearAgo).subscribe(
       res => this.yearAccesses = res,
       error => {
         this.popupService
         .showError("Error retrieving year accesses", "Unexpected error")
+        this.router.navigate(['/dashboard/start'])
+      });
+    this.statsService.getGroupedAccessesByItem(oneYearAgo).subscribe(
+      res => this.itemAccesses = res,
+      error => {
+        this.popupService
+        .showError("Error retrieving accesses by item", "Unexpected error")
         this.router.navigate(['/dashboard/start'])
       });
   }
